@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lands Caper | Landscaping Melbourne</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red-deep:     #7a1515;
+      --red-mid:      #a02020;
+      --red-bright:   #c42b2b;
+      --red-pale:     #f5dede;
+      --charcoal:     #1e1e1e;
+      --charcoal-mid: #3a3a3a;
+      --stone:        #8a8078;
+      --warm-grey:    #c8c0b4;
+      --cream:        #f5f0e8;
+      --off-white:    #faf8f4;
+      --shadow:       0 4px 24px rgba(0,0,0,0.12);
+      --shadow-hover: 0 8px 40px rgba(0,0,0,0.22);
+      --radius:       10px;
+      --font:         'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--off-white);
+      color: var(--charcoal);
+      line-height: 1.6;
+    }
+
+    /* ── Splash ── */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      cursor: pointer;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
+    }
+    #splash-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--warm-grey);
+      opacity: 0;
+      animation: splashFadeUp 0.4s ease 1.2s forwards;
+    }
+    #splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    #splash-logo {
+      width: min(240px, 52vw);
+      height: auto;
+      animation: splashPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    #splash-tagline {
+      font-size: clamp(2.2rem, 7vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: var(--charcoal);
+      line-height: 1;
+      opacity: 0;
+      animation: splashFadeUp 0.5s ease 0.4s forwards;
+    }
+    #splash-tagline em {
+      font-style: normal;
+      color: var(--red-bright);
+    }
+    @keyframes splashPop {
+      from { transform: scale(0.72); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    @keyframes splashFadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Hamburger menu ── */
+    #menu-toggle {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.5rem;
+      z-index: 1000;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    #menu-toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--warm-grey);
+      border-radius: 2px;
+      transition: opacity 0.2s, transform 0.25s;
+      transform-origin: center;
+    }
+    #menu-toggle:hover span { background: var(--red-bright); }
+    #menu-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    #menu-toggle.open span:nth-child(2) { opacity: 0; }
+    #menu-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    #menu-drawer {
+      position: fixed;
+      top: 0; right: 0;
+      width: 220px;
+      height: 100vh;
+      z-index: 999;
+      background: rgba(20,20,20,0.97);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 2.5rem;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    #menu-drawer.open { transform: translateX(0); }
+    #menu-drawer a {
+      color: var(--warm-grey);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
+    }
+    #menu-drawer a:last-child { border-bottom: none; }
+    #menu-drawer a:hover { color: var(--red-bright); }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 2rem 2rem 7rem;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: #fff;
+    }
+    .hero-content { position: relative; z-index: 1; width: 90vw; max-width: 1000px; text-align: center; }
+    .hero-logo {
+      width: min(420px, 72vw);
+      height: auto;
+      margin: 0 auto 1.75rem;
+      display: block;
+      filter: drop-shadow(0 6px 28px rgba(196,43,43,0.2));
+    }
+    .hero-byline {
+      font-size: clamp(2.2rem, 7vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: var(--charcoal);
+      margin-bottom: 1.5rem;
+      line-height: 1;
+      text-align: center;
+    }
+    .hero-byline em {
+      font-style: normal;
+      color: var(--red-bright);
+    }
+    /* Re— animation */
+    .hero-re {
+      font-size: clamp(4rem, 13vw, 9rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -4px;
+      margin: 0 auto 1.75rem;   /* centres the block */
+      display: flex;
+      align-items: baseline;
+      justify-content: flex-start; /* Re stays left-of-block */
+      white-space: nowrap;
+      width: fit-content;        /* sized to "Re" + widest suffix */
+      padding-bottom: 0.1em;
+    }
+    .re-prefix {
+      color: var(--red-bright);
+      flex-shrink: 0;
+    }
+    .re-suffix-wrap {
+      display: inline-block;
+      /* width locked by JS to widest word — no layout shift */
+    }
+    .re-suffix {
+      color: var(--charcoal);
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--stone);
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+      max-width: 520px;
+    }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--red-bright);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(196,43,43,0.45);
+    }
+    .btn-primary:hover {
+      background: var(--red-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(196,43,43,0.55);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--stone);
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 1.5px solid var(--warm-grey);
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--charcoal);
+      color: var(--charcoal);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--warm-grey);
+      font-size: 0.72rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0.6;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: var(--warm-grey);
+      animation: scrollPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ── Section layout ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red-mid);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--charcoal);
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--stone);
+      max-width: 520px;
+      line-height: 1.75;
+    }
+
+    /* ── Services ── */
+    #services { background: var(--cream); }
+    .services-header { margin-bottom: 3.5rem; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+    /* Pillar cards */
+    .services-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .pillar-card {
+      border-radius: var(--radius);
+      padding: 2.25rem 2rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .pillar-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .pillar-art   { background: var(--charcoal); }
+    .pillar-hard  { background: var(--red-deep); }
+    .pillar-garden{ background: #2a3a28; }
+    .pillar-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 1rem;
+    }
+    .pillar-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+      letter-spacing: -0.3px;
+    }
+    .pillar-desc {
+      font-size: 0.87rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .pillar-list {
+      list-style: none;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 1.25rem;
+    }
+    .pillar-list li {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.75);
+      padding: 0.3rem 0;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .pillar-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.7rem;
+    }
+    @media (max-width: 900px) {
+      .services-pillars { grid-template-columns: 1fr; }
+    }
+
+    /* ── Projects Section ── */
+    #projects { background: #111; padding: 6rem 2rem; }
+    #projects .section-label { color: var(--red-bright); }
+    #projects .section-title { color: #fff; margin-bottom: 0.75rem; }
+    #projects .section-sub   { color: var(--stone); margin-bottom: 4rem; }
+
+    .project-block {
+      margin-bottom: 6rem;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 3rem;
+      align-items: start;
+    }
+    .project-block:last-child { margin-bottom: 0; }
+    .project-block:nth-child(even) {
+      grid-template-columns: 340px 1fr;
+    }
+    .project-block:nth-child(even) .project-player { order: 2; }
+    .project-block:nth-child(even) .project-meta   { order: 1; }
+
+    /* Player */
+    .project-player {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      aspect-ratio: 16/9;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Stage — images stack here */
+    .player-stage {
+      position: absolute;
+      inset: 0;
+    }
+    .player-frame {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .player-frame.active { opacity: 1; }
+    .player-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* Placeholder frame */
+    .player-frame.placeholder {
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    .player-frame.placeholder.ph-progress {
+      background: linear-gradient(135deg, #1a2a1a, #2a3a2a);
+      color: rgba(255,255,255,0.5);
+    }
+    .player-frame.placeholder.ph-hero {
+      background: linear-gradient(135deg, #2a1515, #3a2020);
+      color: rgba(255,255,255,0.6);
+    }
+    .ph-label-top {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+    .ph-label-main {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .ph-label-file {
+      font-size: 0.7rem;
+      opacity: 0.4;
+      font-family: monospace;
+    }
+
+    /* Phase badge */
+    .phase-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      transition: all 0.3s;
+      z-index: 10;
+    }
+    .phase-badge.progress {
+      background: rgba(42,58,40,0.85);
+      color: #7ec87a;
+      border: 1px solid rgba(126,200,122,0.3);
+    }
+    .phase-badge.hero {
+      background: rgba(90,20,20,0.85);
+      color: #e88080;
+      border: 1px solid rgba(232,128,128,0.3);
+    }
+
+    /* Play/pause overlay */
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 9;
+      pointer-events: none;
+    }
+    .project-player.paused .play-overlay { opacity: 1; }
+    .play-icon {
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    /* Progress bar */
+    .player-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 10;
+      padding: 0.6rem 1rem 0.8rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    }
+    .bar-track {
+      height: 3px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 2px;
+      position: relative;
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: var(--red-bright);
+      border-radius: 2px;
+      transition: width 0.15s linear;
+      width: 0%;
+    }
+    .bar-dots {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .bar-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      transition: background 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .bar-dot.active {
+      background: #fff;
+      transform: scale(1.3);
+    }
+    .bar-dot.hero-dot.active {
+      background: var(--red-bright);
+    }
+    .bar-separator {
+      width: 1px; height: 10px;
+      background: rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+
+    /* Meta */
+    .project-meta { padding-top: 0.5rem; }
+    .project-category-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red-bright);
+      border: 1px solid rgba(196,43,43,0.4);
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+    .project-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--stone);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .project-tag {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.06);
+      padding: 0.25rem 0.7rem;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 900px) {
+      .project-block,
+      .project-block:nth-child(even) {
+        grid-template-columns: 1fr;
+      }
+      .project-block:nth-child(even) .project-player,
+      .project-block:nth-child(even) .project-meta {
+        order: unset;
+      }
+    }
+
+    /* ── Gallery ── */
+    #gallery { background: var(--off-white); }
+    .gallery-header { margin-bottom: 2.5rem; }
+    .gallery-filters {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1.5px solid var(--warm-grey);
+      color: var(--stone);
+      padding: 0.4rem 1.1rem;
+      border-radius: 100px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--charcoal);
+      border-color: var(--charcoal);
+      color: #fff;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+    .gallery-item {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      background: var(--cream);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+      display: block;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(30,30,30,0.88) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.25rem;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .gallery-item-label {
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+    }
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--stone);
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-align: center;
+      background: var(--cream);
+      border: 2px dashed var(--warm-grey);
+    }
+    .gallery-placeholder .ph-icon { font-size: 2rem; opacity: 0.5; }
+    .gallery-item.hidden { display: none; }
+
+    /* ── About ── */
+    #about { background: var(--charcoal); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-image-wrap { position: relative; }
+    .about-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: var(--radius);
+      background: var(--charcoal-mid);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--stone);
+      font-size: 0.82rem;
+      text-align: center;
+      border: 2px dashed #444;
+    }
+    .about-placeholder .ph-icon { font-size: 3rem; opacity: 0.4; }
+    .about-accent {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      width: 55%;
+      aspect-ratio: 1;
+      border-radius: var(--radius);
+      border: 2px solid var(--red-bright);
+      z-index: -1;
+      opacity: 0.5;
+    }
+    .about-content .section-label { color: var(--red-bright); }
+    .about-content .section-title { color: #fff; }
+    .about-content p { color: var(--warm-grey); line-height: 1.85; margin-top: 1rem; }
+    .about-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat { }
+    .stat-number {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--red-bright);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--stone);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Contact ── */
+    #contact { background: var(--cream); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-info .section-sub { margin-bottom: 0; }
+    .contact-details { margin-top: 2rem; }
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .contact-detail-icon { font-size: 1.2rem; margin-top: 0.1rem; flex-shrink: 0; }
+    .contact-detail-text strong {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--red-mid);
+      margin-bottom: 0.2rem;
+    }
+    .contact-detail-text a, .contact-detail-text span {
+      color: var(--charcoal);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .contact-detail-text a:hover { color: var(--red-mid); }
+    .contact-form {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+    .form-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 1.5rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--stone);
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.3px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.72rem 1rem;
+      border: 1.5px solid #ddd;
+      border-radius: 7px;
+      font-size: 0.93rem;
+      font-family: var(--font);
+      color: var(--charcoal);
+      background: #fff;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--red-mid); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      width: 100%;
+      background: var(--red-bright);
+      color: #fff;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 100px;
+      font-size: 0.97rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 4px 16px rgba(196,43,43,0.35);
+    }
+    .form-submit:hover {
+      background: var(--red-mid);
+      transform: translateY(-1px);
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #111;
+      color: var(--stone);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .footer-logo { height: 52px; margin: 0 auto 1rem; display: block; }
+    footer p { font-size: 0.82rem; }
+    footer a { color: var(--red-bright); text-decoration: none; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+.about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-accent { display: none; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      section { padding: 4rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Hamburger ── -->
+<button id="menu-toggle" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+<nav id="menu-drawer">
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#gallery" onclick="closeMenu()">Gallery</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#contact" onclick="closeMenu()">Get a quote</a>
+</nav>
+
+<!-- ── Splash ── -->
+<div id="splash">
+  <img src="logo.png" alt="Lands Caper" id="splash-logo">
+  <div id="splash-tagline">Think <em>outside</em>…</div>
+  <div id="splash-hint">Tap to enter</div>
+</div>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <img src="logo.png" alt="Lands Caper" class="hero-logo">
+    <div class="hero-byline">Think <em>outside</em>…</div>
+    <div class="hero-re" aria-label="Re-use, Re-cycle, Re-claim, Re-purpose, Re-imagine">
+      <span class="re-prefix">Re</span><span class="re-suffix-wrap" id="reSuffixWrap"><span class="re-suffix" id="reSuffix"></span></span>
+    </div>
+    <p class="hero-sub">Landscaping with reclaimed and recycled materials. Art, hardscapes, and garden — no catalogue, no cookie-cutter.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get a free quote</a>
+      <a href="#gallery" class="btn-secondary">See the work</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ── Services ── -->
+<section id="services">
+  <div class="container">
+    <div class="services-header">
+      <div class="section-label">Three ways we work</div>
+      <h2 class="section-title">Art. Hardscapes. Garden.</h2>
+      <p class="section-sub">Most landscapers do one of these. We do all three — and they work better together.</p>
+    </div>
+    <div class="services-pillars">
+
+      <div class="pillar-card pillar-art">
+        <div class="pillar-eyebrow">01 — Art</div>
+        <div class="pillar-title">Where the space becomes something</div>
+        <p class="pillar-desc">This is the part most landscapers skip. Custom tile-work, resin inlays, hand-laid mosaic paving, murals, sculpture — the details that make a space feel intentional rather than installed.</p>
+        <ul class="pillar-list">
+          <li>Custom paving &amp; tile-work</li>
+          <li>Resin inlays</li>
+          <li>Murals</li>
+          <li>Sculpture &amp; found-object features</li>
+          <li>Creative space design</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card pillar-hard">
+        <div class="pillar-eyebrow">02 — Hardscapes</div>
+        <div class="pillar-title">Built to last. Built to look the part.</div>
+        <p class="pillar-desc">Steel, stone, brick, corten — structural elements that age well instead of looking tired. Corten steel develops a rust patina over time that only gets better. The hardscape is the bones of the space.</p>
+        <ul class="pillar-list">
+          <li>Steel frame decks</li>
+          <li>Paving &amp; stonework</li>
+          <li>Brickwork &amp; tiling</li>
+          <li>Corten steel (rust patina finish)</li>
+          <li>Reclaimed &amp; salvaged materials</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card pillar-garden">
+        <div class="pillar-eyebrow">03 — Garden</div>
+        <div class="pillar-title">The living part.</div>
+        <p class="pillar-desc">Planting that suits the soil, the sun, and the person who has to live with it. Irrigation that actually works. Turf that handles Melbourne summers. The green stuff that ties everything else together.</p>
+        <ul class="pillar-list">
+          <li>Planting (natives, exotics, edibles)</li>
+          <li>Irrigation systems</li>
+          <li>Soil prep &amp; improvement</li>
+          <li>Turf &amp; lawn</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Gallery ── -->
+<section id="gallery">
+  <div class="container">
+    <div class="gallery-header">
+      <div class="section-label">The work</div>
+      <h2 class="section-title">Recent projects</h2>
+      <p class="section-sub">Every job is different. Here's a sample of what we've done.</p>
+    </div>
+    <div class="gallery-filters">
+      <button class="filter-btn active" data-filter="all">All work</button>
+      <button class="filter-btn" data-filter="art">Art</button>
+      <button class="filter-btn" data-filter="hardscapes">Hardscapes</button>
+      <button class="filter-btn" data-filter="garden">Garden</button>
+    </div>
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- ── HOW TO ADD A REAL PHOTO ──────────────────────────────────────────
+           Replace a <div class="gallery-placeholder"> block with:
+             <img src="images/your-photo.jpg" alt="Description">
+           data-category must be one of: art | hardscapes | garden
+           See PHOTO-WORKFLOW.md for full instructions.
+      ─────────────────────────────────────────────────────────────────────── -->
+
+      <div class="gallery-item" data-category="art">
+        <div class="gallery-placeholder"><span class="ph-icon">🎨</span>art-01.jpg<br><small>e.g. tile-work, resin inlay</small></div>
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Art</span></div>
+      </div>
+      <div class="gallery-item" data-category="hardscapes">
+        <div class="gallery-placeholder"><span class="ph-icon">🔩</span>hardscapes-01.jpg<br><small>e.g. corten steel, deck</small></div>
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Hardscapes</span></div>
+      </div>
+      <div class="gallery-item" data-category="garden">
+        <div class="gallery-placeholder"><span class="ph-icon">🌿</span>garden-01.jpg<br><small>e.g. planting, turf</small></div>
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Garden</span></div>
+      </div>
+      <div class="gallery-item" data-category="art">
+        <div class="gallery-placeholder"><span class="ph-icon">🎨</span>art-02.jpg<br><small>e.g. mural, sculpture</small></div>
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Art</span></div>
+      </div>
+      <div class="gallery-item" data-category="hardscapes">
+        <div class="gallery-placeholder"><span class="ph-icon">🔩</span>hardscapes-02.jpg<br><small>e.g. stonework, brickwork</small></div>
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Hardscapes</span></div>
+      </div>
+      <div class="gallery-item" data-category="garden">
+        <div class="gallery-placeholder"><span class="ph-icon">🌿</span>garden-02.jpg<br><small>e.g. irrigation, soil work</small></div>
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Garden</span></div>
+      </div>
+      <div class="gallery-item" data-category="art">
+        <div class="gallery-placeholder"><span class="ph-icon">🎨</span>art-03.jpg</div>
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Art</span></div>
+      </div>
+      <div class="gallery-item" data-category="hardscapes">
+        <div class="gallery-placeholder"><span class="ph-icon">🔩</span>hardscapes-03.jpg</div>
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Hardscapes</span></div>
+      </div>
+      <div class="gallery-item" data-category="garden">
+        <div class="gallery-placeholder"><span class="ph-icon">🌿</span>garden-03.jpg</div>
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Garden</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Projects ── -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">Project showcases</div>
+    <h2 class="section-title">From first dig to final shot</h2>
+    <p class="section-sub">Progress through the build, then the finished result. Click to pause.</p>
+    <div id="projects-list"></div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image-wrap">
+        <!-- Replace with: <img src="images/about-photo.jpg" alt="Your name" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;"> -->
+        <div class="about-placeholder">
+          <span class="ph-icon">👤</span>
+          <span>about-photo.jpg<br><small>Drop your photo here</small></span>
+        </div>
+        <div class="about-accent"></div>
+      </div>
+      <div class="about-content">
+        <div class="section-label">Who's doing the work</div>
+        <h2 class="section-title" style="color:#fff;">Not your average<br>landscaper</h2>
+        <p>I'm [Your name]. I show up, I do the work, and I actually care what it looks like when I leave. No sub-contracting, no crew of randoms — when you call Lands Caper, you get me.</p>
+        <p>I got into this because there's something satisfying about taking what other people throw away and building something better out of it. Old railway sleepers, salvaged stone, reclaimed timber — half the character of a garden comes from materials that have already lived a bit.</p>
+        <p>Twenty years in. Based in Sydney, but good work is worth travelling for.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <span class="stat-number">100+</span>
+            <span class="stat-label">Jobs completed</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">20</span>
+            <span class="stat-label">Full redesigns</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">20 yrs</span>
+            <span class="stat-label">Experience</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-label">Get in touch</div>
+        <h2 class="section-title">Let's talk about<br>your space</h2>
+        <p class="section-sub">Free quotes, no obligation. Tell me what you're thinking and I'll tell you what it'll take.</p>
+        <div class="contact-details">
+          <div class="contact-detail">
+            <span class="contact-detail-icon">📞</span>
+            <div class="contact-detail-text">
+              <strong>Phone</strong>
+              <a href="tel:+61400000000">0400 000 000</a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">📧</span>
+            <div class="contact-detail-text">
+              <strong>Email</strong>
+              <a href="mailto:hello@landscaper.com.au">hello@landscaper.com.au</a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">📍</span>
+            <div class="contact-detail-text">
+              <strong>Area</strong>
+              <span>Sydney-based — interesting work warrants travel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-title">Request a free quote</div>
+        <!-- For a real contact form, sign up free at formspree.io and replace the action URL -->
+        <!-- action="https://formspree.io/f/your-form-id" method="POST" -->
+        <form action="mailto:hello@landscaper.com.au" method="post" enctype="text/plain">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" placeholder="0400 000 000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="suburb">Suburb</label>
+            <input type="text" id="suburb" name="suburb" placeholder="e.g. Brunswick, Northcote...">
+          </div>
+          <div class="form-group">
+            <label for="service">What are you after?</label>
+            <select id="service" name="service">
+              <option value="">— Select a service —</option>
+              <option>Garden design</option>
+              <option>Retaining walls</option>
+              <option>Lawn & turf</option>
+              <option>Planting</option>
+              <option>Paving & paths</option>
+              <option>Ongoing maintenance</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell me about the job</label>
+            <textarea id="message" name="message" placeholder="What's the space like? Any specific ideas? Rough timeline?"></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send enquiry →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <img src="logo.png" alt="Lands Caper" class="footer-logo">
+  <p>© 2026 Lands Caper &nbsp;·&nbsp; Melbourne Landscaping &nbsp;·&nbsp; <a href="mailto:hello@landscaper.com.au">hello@landscaper.com.au</a></p>
+</footer>
+
+<!-- ── Projects JS ── -->
+<script>
+const PROJECTS = [
+  {
+    name: "Annandale Staircase",
+    category: "Hardscapes",
+    desc: "A full staircase build from ground up — structural stonework, custom treads, finished detail work.",
+    progress: ["Galleries/Annandale%20Staircase/IMG_3233.JPEG","Galleries/Annandale%20Staircase/IMG_3235.JPEG","Galleries/Annandale%20Staircase/IMG_3241.JPEG","Galleries/Annandale%20Staircase/IMG_3243.JPEG","Galleries/Annandale%20Staircase/IMG_3246.JPEG","Galleries/Annandale%20Staircase/IMG_3248.JPEG","Galleries/Annandale%20Staircase/IMG_3251.JPEG","Galleries/Annandale%20Staircase/IMG_3253.JPEG","Galleries/Annandale%20Staircase/IMG_3260.JPEG","Galleries/Annandale%20Staircase/IMG_3264.JPEG","Galleries/Annandale%20Staircase/IMG_3266.JPEG","Galleries/Annandale%20Staircase/IMG_3268.JPEG","Galleries/Annandale%20Staircase/IMG_3282.JPEG","Galleries/Annandale%20Staircase/IMG_3284.JPEG","Galleries/Annandale%20Staircase/IMG_4775.JPEG","Galleries/Annandale%20Staircase/IMG_5654.JPEG","Galleries/Annandale%20Staircase/IMG_5660.JPEG","Galleries/Annandale%20Staircase/IMG_5662.JPEG","Galleries/Annandale%20Staircase/IMG_5665.JPEG","Galleries/Annandale%20Staircase/IMG_5699.JPEG"],
+    videos: ["Galleries/Annandale%20Staircase/IMG_3236.MP4","Galleries/Annandale%20Staircase/IMG_4774.MOV","Galleries/Annandale%20Staircase/IMG_5654.MOV"],
+    hero: ["Galleries/Annandale%20Staircase/IMG_7459.JPEG","Galleries/Annandale%20Staircase/IMG_7460.JPEG","Galleries/Annandale%20Staircase/IMG_7461.JPEG"]
+  },
+  {
+    name: "Ashbury Picket Fence",
+    category: "Hardscapes",
+    desc: "Picket fence from scratch — posts, rails, pickets, and a finish that'll outlast the house.",
+    progress: ["Galleries/Ashbury%20Picket%20Fence/IMG_4798.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6058.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6060.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6160.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6169.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6171.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6180.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6182.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6184.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6186.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6188.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6203.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6221.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6223.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_6250.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_7084.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_7086.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_7110.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_7117.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_7119.JPEG"],
+    videos: ["Galleries/Ashbury%20Picket%20Fence/IMG_6221.MOV","Galleries/Ashbury%20Picket%20Fence/IMG_6223.MOV","Galleries/Ashbury%20Picket%20Fence/IMG_7085.MOV"],
+    hero: ["Galleries/Ashbury%20Picket%20Fence/IMG_7161.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_7162.JPEG","Galleries/Ashbury%20Picket%20Fence/IMG_7163.JPEG"]
+  },
+  {
+    name: "Bronte Stonework",
+    category: "Hardscapes",
+    desc: "Natural stone walls and feature work — every piece placed by hand.",
+    progress: ["Galleries/Bronte%20Stonework/IMG_1297.JPEG","Galleries/Bronte%20Stonework/IMG_1299.JPEG","Galleries/Bronte%20Stonework/IMG_1901.JPEG","Galleries/Bronte%20Stonework/IMG_1938.JPEG","Galleries/Bronte%20Stonework/IMG_1948.JPEG","Galleries/Bronte%20Stonework/IMG_1950.JPEG","Galleries/Bronte%20Stonework/IMG_1956.JPEG","Galleries/Bronte%20Stonework/IMG_1963.JPEG","Galleries/Bronte%20Stonework/IMG_1972.JPEG","Galleries/Bronte%20Stonework/IMG_1974.JPEG","Galleries/Bronte%20Stonework/IMG_1976.JPEG","Galleries/Bronte%20Stonework/IMG_1981.JPEG","Galleries/Bronte%20Stonework/IMG_1985.JPEG","Galleries/Bronte%20Stonework/IMG_2005.JPEG","Galleries/Bronte%20Stonework/IMG_2007.JPEG","Galleries/Bronte%20Stonework/IMG_2010.JPEG","Galleries/Bronte%20Stonework/IMG_2045.JPEG","Galleries/Bronte%20Stonework/IMG_2047.JPEG","Galleries/Bronte%20Stonework/IMG_2068.JPEG","Galleries/Bronte%20Stonework/IMG_2072.JPEG"],
+    videos: ["Galleries/Bronte%20Stonework/IMG_1297.MOV","Galleries/Bronte%20Stonework/IMG_2011.MP4","Galleries/Bronte%20Stonework/IMG_2239.MOV"],
+    hero: ["Galleries/Bronte%20Stonework/IMG_2320.JPEG","Galleries/Bronte%20Stonework/IMG_2321.JPEG","Galleries/Bronte%20Stonework/IMG_2322.JPEG"]
+  },
+  {
+    name: "Dulwich Hill Megascreen",
+    category: "Art",
+    desc: "Large-format outdoor screen installation — structural build plus creative integration into the garden.",
+    progress: ["Galleries/Dulwich%20Hill%20Megascreen/IMG_5903.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5904.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5906.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5910.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5911.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5912.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5915.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5916.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5918.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5919.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5920.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5921.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5922.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_5923.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_6012.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_6013.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_6014.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_6015.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_6016.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_6025.JPEG"],
+    videos: ["Galleries/Dulwich%20Hill%20Megascreen/IMG_5903.MOV","Galleries/Dulwich%20Hill%20Megascreen/IMG_5915.MOV","Galleries/Dulwich%20Hill%20Megascreen/IMG_6046.MP4"],
+    hero: ["Galleries/Dulwich%20Hill%20Megascreen/IMG_6420.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_6524.JPEG","Galleries/Dulwich%20Hill%20Megascreen/IMG_6525.JPEG"]
+  },
+  {
+    name: "Dulwich Hill Picket Fence",
+    category: "Hardscapes",
+    desc: "Clean picket fence build with solid post setting and detailed picket spacing.",
+    progress: ["Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5400.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5401.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5402.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5404.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5405.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5406.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5414.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5424.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5425.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5463.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5666.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5667.JPEG"],
+    videos: ["Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5400.MOV","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5464.MP4","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5666.MOV"],
+    hero: ["Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5668.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5670.JPEG","Galleries/Dulwich%20Hill%20Picket%20Fence/IMG_5673.JPEG"]
+  },
+  {
+    name: "Katoomba Restyle",
+    category: "Garden",
+    desc: "Full garden restyle in the Blue Mountains — new planting, hard edges, and a space that suits the climate.",
+    progress: ["Galleries/Katoomba%20Restyle/IMG_4798.JPEG","Galleries/Katoomba%20Restyle/IMG_6058.JPEG","Galleries/Katoomba%20Restyle/IMG_6060.JPEG","Galleries/Katoomba%20Restyle/IMG_6160.JPEG","Galleries/Katoomba%20Restyle/IMG_6169.JPEG","Galleries/Katoomba%20Restyle/IMG_6171.JPEG","Galleries/Katoomba%20Restyle/IMG_6180.JPEG","Galleries/Katoomba%20Restyle/IMG_6182.JPEG","Galleries/Katoomba%20Restyle/IMG_6184.JPEG","Galleries/Katoomba%20Restyle/IMG_6186.JPEG","Galleries/Katoomba%20Restyle/IMG_6188.JPEG","Galleries/Katoomba%20Restyle/IMG_6203.JPEG","Galleries/Katoomba%20Restyle/IMG_6221.JPEG","Galleries/Katoomba%20Restyle/IMG_6223.JPEG","Galleries/Katoomba%20Restyle/IMG_6250.JPEG","Galleries/Katoomba%20Restyle/IMG_7084.JPEG","Galleries/Katoomba%20Restyle/IMG_7086.JPEG","Galleries/Katoomba%20Restyle/IMG_7110.JPEG","Galleries/Katoomba%20Restyle/IMG_7117.JPEG","Galleries/Katoomba%20Restyle/IMG_7119.JPEG"],
+    videos: ["Galleries/Katoomba%20Restyle/IMG_6221.MOV","Galleries/Katoomba%20Restyle/IMG_6250.MOV","Galleries/Katoomba%20Restyle/IMG_7085.MOV"],
+    hero: ["Galleries/Katoomba%20Restyle/IMG_7161.JPEG","Galleries/Katoomba%20Restyle/IMG_7162.JPEG","Galleries/Katoomba%20Restyle/IMG_7163.JPEG"]
+  },
+  {
+    name: "Newtown Raised Brickwork",
+    category: "Hardscapes",
+    desc: "Raised garden beds in recycled brick — built level on a sloped site, finished clean.",
+    progress: ["Galleries/Newtown%20Raised%20Brickwork/IMG_6090.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6091.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6207.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6208.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6318.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6319.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6320.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6321.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6323.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6335.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6340.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6341.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6349.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6350.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6352.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6353.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6356.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6357.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6359.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6360.JPEG"],
+    videos: ["Galleries/Newtown%20Raised%20Brickwork/IMG_6318.MOV","Galleries/Newtown%20Raised%20Brickwork/IMG_6353.MOV","Galleries/Newtown%20Raised%20Brickwork/IMG_6435.MOV"],
+    hero: ["Galleries/Newtown%20Raised%20Brickwork/IMG_6456.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6457.JPEG","Galleries/Newtown%20Raised%20Brickwork/IMG_6458.JPEG"]
+  },
+  {
+    name: "Newtown Tiling",
+    category: "Art",
+    desc: "Custom tile-work — pattern design, prep, and lay. The kind of detail that makes a space.",
+    progress: ["Galleries/Newtown%20Tiling/IMG_6520.JPEG","Galleries/Newtown%20Tiling/IMG_6690.JPEG","Galleries/Newtown%20Tiling/IMG_6698.JPEG","Galleries/Newtown%20Tiling/IMG_6699.JPEG","Galleries/Newtown%20Tiling/IMG_6700.JPEG","Galleries/Newtown%20Tiling/IMG_6701.JPEG","Galleries/Newtown%20Tiling/IMG_6705.JPEG","Galleries/Newtown%20Tiling/IMG_6706.JPEG","Galleries/Newtown%20Tiling/IMG_6755.JPEG","Galleries/Newtown%20Tiling/IMG_6777.JPEG","Galleries/Newtown%20Tiling/IMG_6779.JPEG","Galleries/Newtown%20Tiling/IMG_6780.JPEG","Galleries/Newtown%20Tiling/IMG_6795.JPEG","Galleries/Newtown%20Tiling/IMG_6802.JPEG","Galleries/Newtown%20Tiling/IMG_6803.JPEG"],
+    videos: ["Galleries/Newtown%20Tiling/IMG_6520.MOV","Galleries/Newtown%20Tiling/IMG_6795.MOV","Galleries/Newtown%20Tiling/IMG_6803.MOV"],
+    hero: ["Galleries/Newtown%20Tiling/IMG_6804.JPEG","Galleries/Newtown%20Tiling/IMG_6805.JPEG","Galleries/Newtown%20Tiling/IMG_6806.JPEG"]
+  },
+  {
+    name: "Roseville Rock Wall",
+    category: "Hardscapes",
+    desc: "Rock wall construction — site-sourced stone, dry-stack technique, built into a steep slope.",
+    progress: ["Galleries/Roseville%20Rock%20Wall/IMG_5942.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5944.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5945.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5946.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5947.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5948.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5949.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5950.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5951.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5952.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5953.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5954.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5971.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5975.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5976.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5977.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5978.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5984.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5985.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_5988.JPEG"],
+    videos: ["Galleries/Roseville%20Rock%20Wall/IMG_5942.MOV","Galleries/Roseville%20Rock%20Wall/IMG_5954.MOV","Galleries/Roseville%20Rock%20Wall/IMG_5985.MOV"],
+    hero: ["Galleries/Roseville%20Rock%20Wall/IMG_7417.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_7418.JPEG","Galleries/Roseville%20Rock%20Wall/IMG_7419.JPEG"]
+  },
+  {
+    name: "Seaforth Paving",
+    category: "Hardscapes",
+    desc: "Large-area paving job — prep, base, lay, and finishing. A surface that'll hold for decades.",
+    progress: ["Galleries/Seaforth%20Paving/IMG_7025.JPEG","Galleries/Seaforth%20Paving/IMG_7027.JPEG","Galleries/Seaforth%20Paving/IMG_7029.JPEG","Galleries/Seaforth%20Paving/IMG_7031.JPEG","Galleries/Seaforth%20Paving/IMG_7033.JPEG","Galleries/Seaforth%20Paving/IMG_7038.JPEG","Galleries/Seaforth%20Paving/IMG_7040.JPEG","Galleries/Seaforth%20Paving/IMG_7042.JPEG","Galleries/Seaforth%20Paving/IMG_7045.JPEG","Galleries/Seaforth%20Paving/IMG_7047.JPEG","Galleries/Seaforth%20Paving/IMG_7049.JPEG","Galleries/Seaforth%20Paving/IMG_7052.JPEG","Galleries/Seaforth%20Paving/IMG_7056.JPEG","Galleries/Seaforth%20Paving/IMG_7058.JPEG","Galleries/Seaforth%20Paving/IMG_7061.JPEG","Galleries/Seaforth%20Paving/IMG_7064.JPEG","Galleries/Seaforth%20Paving/IMG_7066.JPEG","Galleries/Seaforth%20Paving/IMG_7068.JPEG","Galleries/Seaforth%20Paving/IMG_7070.JPEG","Galleries/Seaforth%20Paving/IMG_7072.JPEG"],
+    videos: ["Galleries/Seaforth%20Paving/IMG_7025.MOV","Galleries/Seaforth%20Paving/IMG_7042.MOV","Galleries/Seaforth%20Paving/IMG_7061.MOV"],
+    hero: ["Galleries/Seaforth%20Paving/IMG_7078.JPEG","Galleries/Seaforth%20Paving/IMG_7081.JPEG","Galleries/Seaforth%20Paving/IMG_7082.JPEG"]
+  }
+];
+
+// ── Build sequence: progress photos, then video clips, then hero shots ──
+function buildSequence(p) {
+  const seq = [];
+  p.progress.forEach(src => seq.push({type:'image', src, phase:'progress', dur:450}));
+  p.videos.forEach(src  => seq.push({type:'video', src, phase:'video',    dur:null}));
+  p.hero.forEach(src    => seq.push({type:'image', src, phase:'hero',     dur:3200}));
+  return seq;
+}
+
+// ── Render project blocks ──
+const list = document.getElementById('projects-list');
+PROJECTS.forEach((proj, pi) => {
+  const block = document.createElement('div');
+  block.className = 'project-block';
+  block.innerHTML = `
+    <div class="project-player" id="player-${pi}" data-pi="${pi}" data-paused="false">
+      <div class="player-stage" id="stage-${pi}"></div>
+      <div class="phase-badge progress" id="badge-${pi}">Build process</div>
+      <div class="play-overlay"><div class="play-icon">▶</div></div>
+      <div class="player-bar">
+        <div class="bar-track"><div class="bar-fill" id="fill-${pi}"></div></div>
+        <div class="bar-dots" id="dots-${pi}"></div>
+      </div>
+    </div>
+    <div class="project-meta">
+      <div class="project-category-tag">${proj.category}</div>
+      <h3 class="project-title">${proj.name}</h3>
+      <p class="project-desc">${proj.desc}</p>
+      <div class="project-tags">
+        <span class="project-tag">${proj.progress.length} progress shots</span>
+        <span class="project-tag">${proj.videos.length} clips</span>
+        <span class="project-tag">${proj.hero.length} key features</span>
+      </div>
+    </div>`;
+  list.appendChild(block);
+});
+
+// ── Player engine ──
+PROJECTS.forEach((proj, pi) => {
+  const seq      = buildSequence(proj);
+  const stage    = document.getElementById(`stage-${pi}`);
+  const badge    = document.getElementById(`badge-${pi}`);
+  const fill     = document.getElementById(`fill-${pi}`);
+  const dotsEl   = document.getElementById(`dots-${pi}`);
+  const playerEl = document.getElementById(`player-${pi}`);
+
+  let cur = 0, timer = null, paused = false, started = false;
+
+  // Build dot indicators
+  const progCount = proj.progress.length;
+  const vidCount  = proj.videos.length;
+  const heroCount = proj.hero.length;
+
+  // Progress dots (sample to max 12 for space)
+  const progDots = Math.min(progCount, 12);
+  for (let i = 0; i < progDots; i++) {
+    const d = document.createElement('div');
+    d.className = 'bar-dot'; d.dataset.i = i; d.dataset.phase = 'progress';
+    dotsEl.appendChild(d);
+  }
+  // Separator
+  if (vidCount > 0) {
+    const sep = document.createElement('div'); sep.className = 'bar-separator';
+    dotsEl.appendChild(sep);
+    for (let i = 0; i < vidCount; i++) {
+      const d = document.createElement('div');
+      d.className = 'bar-dot'; d.dataset.i = progDots + i; d.dataset.phase = 'video';
+      dotsEl.appendChild(d);
+    }
+  }
+  // Separator
+  const sep2 = document.createElement('div'); sep2.className = 'bar-separator';
+  dotsEl.appendChild(sep2);
+  for (let i = 0; i < heroCount; i++) {
+    const d = document.createElement('div');
+    d.className = 'bar-dot hero-dot'; d.dataset.i = progDots + vidCount + i; d.dataset.phase = 'hero';
+    dotsEl.appendChild(d);
+  }
+
+  const allDots = dotsEl.querySelectorAll('.bar-dot');
+
+  function showFrame(idx) {
+    cur = idx;
+    const item = seq[idx];
+
+    // Clear old frames
+    stage.innerHTML = '';
+
+    // Update fill bar
+    fill.style.width = `${((idx + 1) / seq.length) * 100}%`;
+
+    // Update dots — map seq index to dot index
+    const dotIdx = idx < progCount
+      ? Math.floor(idx * progDots / Math.max(progCount, 1))
+      : idx < progCount + vidCount
+        ? progDots + (idx - progCount)
+        : progDots + vidCount + (idx - progCount - vidCount);
+
+    allDots.forEach(d => d.classList.remove('active'));
+    if (allDots[dotIdx]) allDots[dotIdx].classList.add('active');
+
+    // Update phase badge
+    if (item.phase === 'hero') {
+      badge.textContent = 'Key features';
+      badge.className = 'phase-badge hero';
+    } else {
+      badge.textContent = 'Build process';
+      badge.className = 'phase-badge progress';
+    }
+
+    if (item.type === 'image') {
+      const img = document.createElement('img');
+      img.src = item.src;
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+      const frame = document.createElement('div');
+      frame.className = 'player-frame active';
+      frame.appendChild(img);
+      stage.appendChild(frame);
+
+      if (!paused) {
+        timer = setTimeout(() => {
+          if (idx + 1 < seq.length) showFrame(idx + 1);
+          else showFrame(0); // loop
+        }, item.dur);
+      }
+    } else {
+      // Video
+      const vid = document.createElement('video');
+      vid.src = item.src;
+      vid.muted = true;
+      vid.playsInline = true;
+      vid.autoplay = true;
+      vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+      const frame = document.createElement('div');
+      frame.className = 'player-frame active';
+      frame.appendChild(vid);
+      stage.appendChild(frame);
+
+      if (!paused) {
+        vid.play().catch(() => {});
+        vid.addEventListener('ended', () => {
+          if (!paused) {
+            if (idx + 1 < seq.length) showFrame(idx + 1);
+            else showFrame(0);
+          }
+        });
+        // Safety timeout in case video fails to load
+        timer = setTimeout(() => {
+          if (idx + 1 < seq.length) showFrame(idx + 1);
+          else showFrame(0);
+        }, 5000);
+      }
+    }
+  }
+
+  function togglePause() {
+    paused = !paused;
+    playerEl.dataset.paused = paused;
+    playerEl.classList.toggle('paused', paused);
+    if (!paused) {
+      clearTimeout(timer);
+      const item = seq[cur];
+      if (item.type === 'video') {
+        const vid = stage.querySelector('video');
+        if (vid) {
+          vid.play().catch(() => {});
+          vid.addEventListener('ended', () => {
+            if (!paused) {
+              if (cur + 1 < seq.length) showFrame(cur + 1);
+              else showFrame(0);
+            }
+          }, {once: true});
+        }
+      } else {
+        timer = setTimeout(() => {
+          if (cur + 1 < seq.length) showFrame(cur + 1);
+          else showFrame(0);
+        }, item.dur);
+      }
+    } else {
+      clearTimeout(timer);
+      const vid = stage.querySelector('video');
+      if (vid) vid.pause();
+    }
+  }
+
+  playerEl.addEventListener('click', togglePause);
+
+  // Intersection Observer — start when scrolled into view
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !started) {
+        started = true;
+        showFrame(0);
+        obs.disconnect();
+      }
+    });
+  }, {threshold: 0.3});
+  obs.observe(playerEl);
+});
+</script>
+
+<!-- ── Re— typewriter JS ── -->
+<script>
+(function() {
+  const WORDS      = ['use', 'cycle', 'claim', 'purpose', 'imagine'];
+  const TYPE_MS    = 210;  // ms per character typed
+  const ERASE_MS   = 90;   // ms per character erased
+  const HOLD_MS    = 3000; // pause after word is fully typed
+
+  const suf  = document.getElementById('reSuffix');
+  const wrap = document.getElementById('reSuffixWrap');
+
+  // Lock container width to widest word before animation starts
+  // so "Re" prefix never shifts position
+  function lockWidth() {
+    let max = 0;
+    WORDS.forEach(w => {
+      suf.textContent = w;
+      max = Math.max(max, suf.offsetWidth);
+    });
+    suf.textContent = '';
+    wrap.style.width = (max + 4) + 'px'; // +4px for cursor breathing room
+  }
+
+  let si = 0, ci = 0, erasing = false;
+
+  function tick() {
+    const word = WORDS[si];
+
+    if (!erasing) {
+      ci++;
+      suf.textContent = word.slice(0, ci);
+      if (ci === word.length) {
+        // Fully typed — hold, then start erasing
+        setTimeout(() => { erasing = true; tick(); }, HOLD_MS);
+      } else {
+        setTimeout(tick, TYPE_MS);
+      }
+    } else {
+      ci--;
+      suf.textContent = word.slice(0, ci);
+      if (ci === 0) {
+        // Fully erased — move to next word
+        erasing = false;
+        si = (si + 1) % WORDS.length;
+        setTimeout(tick, TYPE_MS + 80); // slight pause before typing next
+      } else {
+        setTimeout(tick, ERASE_MS);
+      }
+    }
+  }
+
+  // After DOM is ready, lock width then start after splash
+  window.addEventListener('load', () => {
+    lockWidth();
+    setTimeout(tick, 2200);
+  });
+})();
+</script>
+
+<!-- ── Splash JS ── -->
+<script>
+  const splashEl = document.getElementById('splash');
+
+  function dismissSplash() {
+    splashEl.classList.add('hidden');
+  }
+
+  // Click anywhere on splash to dismiss
+  splashEl.addEventListener('click', dismissSplash);
+
+  // Auto-dismiss after 4.5s
+  window.addEventListener('load', () => {
+    setTimeout(dismissSplash, 4500);
+  });
+
+  // ── Hamburger menu ──
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuDrawer = document.getElementById('menu-drawer');
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = menuDrawer.classList.toggle('open');
+    menuToggle.classList.toggle('open', isOpen);
+  });
+
+  function closeMenu() {
+    menuDrawer.classList.remove('open');
+    menuToggle.classList.remove('open');
+  }
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!menuDrawer.contains(e.target) && e.target !== menuToggle && !menuToggle.contains(e.target)) {
+      closeMenu();
+    }
+  });
+</script>
+
+<!-- ── Gallery filter JS ── -->
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.classList.toggle('hidden', filter !== 'all' && item.dataset.category !== filter);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

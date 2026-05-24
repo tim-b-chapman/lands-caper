@@ -1,0 +1,8 @@
+# Gallery source files — too large for git (784MB)
+# These live locally and need to be uploaded separately to hosting
+Galleries/
+
+# OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
