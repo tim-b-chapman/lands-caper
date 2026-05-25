@@ -1174,4 +1174,60 @@ PROJECTS.filter(p => p.story).forEach((proj) => {
 });
 </script>
 
-<!-- ── Re— typewrite
+<!-- ── Re— typewriter JS ── -->
+<script>
+(function() {
+  var WORDS   = ['use', 'cycle', 'claim', 'purpose', 'imagine'];
+  var TYPE_MS  = 210;
+  var ERASE_MS = 90;
+  var HOLD_MS  = 3000;
+  var suf  = document.getElementById('reSuffix');
+  var wrap = document.getElementById('reSuffixWrap');
+  function lockWidth() {
+    var max = 0;
+    WORDS.forEach(function(w) { suf.textContent = w; max = Math.max(max, suf.offsetWidth); });
+    suf.textContent = '';
+    wrap.style.width = (max + 4) + 'px';
+  }
+  var si = 0, ci = 0, erasing = false;
+  function tick() {
+    var word = WORDS[si];
+    if (!erasing) {
+      ci++; suf.textContent = word.slice(0, ci);
+      if (ci === word.length) { setTimeout(function(){ erasing = true; tick(); }, HOLD_MS); }
+      else { setTimeout(tick, TYPE_MS); }
+    } else {
+      ci--; suf.textContent = word.slice(0, ci);
+      if (ci === 0) { erasing = false; si = (si + 1) % WORDS.length; setTimeout(tick, TYPE_MS + 80); }
+      else { setTimeout(tick, ERASE_MS); }
+    }
+  }
+  window.addEventListener('load', function(){ lockWidth(); setTimeout(tick, 2200); });
+})();
+</script>
+
+<!-- ── Splash + Menu JS ── -->
+<script>
+  var splashEl = document.getElementById('splash');
+  function dismissSplash() { splashEl.classList.add('hidden'); }
+  splashEl.addEventListener('click', dismissSplash);
+  window.addEventListener('load', function() { setTimeout(dismissSplash, 4500); });
+
+  var menuToggle = document.getElementById('menu-toggle');
+  var menuDrawer = document.getElementById('menu-drawer');
+  menuToggle.addEventListener('click', function() {
+    var isOpen = menuDrawer.classList.toggle('open');
+    menuToggle.classList.toggle('open', isOpen);
+  });
+  function closeMenu() {
+    menuDrawer.classList.remove('open');
+    menuToggle.classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!menuDrawer.contains(e.target) && e.target !== menuToggle && !menuToggle.contains(e.target)) {
+      closeMenu();
+    }
+  });
+</script>
+</body>
+</html>
