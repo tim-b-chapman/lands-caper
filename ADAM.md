@@ -1,46 +1,43 @@
-# Lands Caper — Adam's Handoff
+# Lands Caper — Website Project Brief
+### For Adam's Claude instance
 
-Hi Claude. You're helping Adam (Brownie) manage and improve his landscaping website at **www.lands-caper.com**.
+Hi Claude. You're helping Adam ("Brownie") manage and grow his landscaping website.
 
-The site is a single-file static HTML site. The file is `index.html` in this folder. Changes go live automatically when pushed to GitHub.
-
-Adam's contact: landscaperaustralia@gmail.com / 0439 221 396
+**Adam is not tech-savvy. Keep instructions simple and concrete.**
 
 ---
 
-## Adam's backlog
+## The site
 
-Work through these with Adam in order of priority.
+- **Live URL:** https://www.lands-caper.com
+- **What it is:** Single-page showcase site — splash screen, hero animation, services, projects, about, contact
+- **Built by:** Tim Chapman (Adam's mate) using Claude
+- **How updates work:** Adam requests changes → Claude edits the HTML file → Tim pushes it live (takes ~2 mins)
 
-### 1. Review the site copy
-Ask Adam to open www.lands-caper.com and read through it with you. Key sections to check:
-- **About** — "I'm Brownie..." paragraph. Does it sound like him?
-- **Services** — Art / Hardscapes / Garden descriptions. Accurate?
-- **Project descriptions** — 10 projects listed. Are the names and one-liners right?
-- **Hero tagline** — "Think outside…" and the Re- animation. Happy with it?
+---
 
-For any text changes: paste the relevant section here and tell Claude what to change. Claude will edit `index.html` and give it back to you to replace the file.
+## Adam's to-do list
 
-### 2. Colour and design feedback
-The site uses a deep red + charcoal + cream palette. Ask Adam:
-- Does the red feel right for the brand?
-- Is there anything that feels off visually when he browses the site?
+### 🔴 Priority — needed to make the site feel real
 
-Note any feedback here for Tim to implement.
+**1. Review the copy**
+Open www.lands-caper.com and read every section. Tell Claude what's wrong, off, or missing. Key things to check:
+- About section — does "I'm Brownie..." sound like you?
+- Services descriptions (Art / Hardscapes / Garden) — accurate?
+- Project names and one-liners — are they right?
 
-### 3. Create a Build Story video for each project
-Each project on the site has a portrait video slot (Instagram story format — 9:16 vertical).
+**2. Create a Build Story video for each project**
+Each project has a portrait video slot (phone-shaped, left side). These need a short CapCut video.
 
-**How to make one in CapCut:**
+How to make one:
 1. Open CapCut on your phone
-2. New Project → pick photos and video clips from that job
-3. Set ratio to 9:16 (portrait / story format)
-4. Add music if you want — keep it under 60 seconds
+2. New Project → pick your best photos + clips from that job
+3. Set canvas to 9:16 (portrait/story format)
+4. Keep it under 60 seconds, add music if you want
 5. Export at highest quality
+6. Share the MP4 with Tim — he'll upload it
 
-**Save it as:** `story.mp4` inside that project's folder in iCloud/Google Photos
-
-**Projects that need a story video:**
+Projects that need a story video:
 - Annandale Staircase
 - Ashbury Picket Fence
 - Bronte Stonework
@@ -52,53 +49,60 @@ Each project on the site has a portrait video slot (Instagram story format — 9
 - Roseville Rock Wall
 - Seaforth Paving
 
-Once a video is ready, share it with Tim. He'll drop it in the right folder and the site updates automatically.
+✅ Taronga Zoo African Edible Garden — already done and live
 
-### 4. Set up iCloud Shared Albums for photo management
-For every new job from here:
+**3. Add hero photos for each project**
+Each project shows 4 photos on the right side. Currently only Taronga Zoo has real photos — the rest show "Photo coming soon."
+
+For each job: pick your 4 best finished shots and share them with Tim in an iCloud Shared Album.
+
+---
+
+### 🟡 Secondary — improve over time
+
+**4. Set up iCloud Shared Albums for new jobs**
+For every new job going forward:
 1. Create a Shared Album in iPhone Photos named after the job (e.g. `Marrickville Courtyard 2026`)
 2. Add photos as you go — progress shots, clips, finished hero shots
-3. Star or favourite the best 3–5 finished shots
-4. Share the album with Tim when the job is done
+3. Star your best 3–5 finished shots
+4. Share the album with Tim when the job wraps
 
-This replaces emailing photos and makes it easy to keep the site current.
+This is how new projects get added to the site.
 
-### 5. Classify existing gallery photos
-The site gallery has placeholder slots for Art / Hardscapes / Garden categories. Adam needs to identify his best 3–5 photos per category for the static gallery grid.
+**5. Colour and design feedback**
+Have a look at the site on your phone. Does anything feel off visually? The palette is deep red + charcoal + cream. Tell Claude if you'd like anything different.
 
-Go through your phone photos and tell Claude:
-- "This photo is a good Art example" → filename or description
-- "This is my best Hardscapes shot" → etc.
-
-Claude will help you build the gallery from those selections.
-
-### 6. Review the project list
-Are all 10 projects the right ones to showcase? Are there better jobs not currently listed? Tell Claude which to add, remove, or rename.
+**6. Review the project list**
+Currently showing 11 projects. Are these the right ones to showcase? Any you'd remove? Any better jobs not listed?
 
 ---
 
 ## How to request site changes
 
-Adam is on Claude Free. Here's the workflow:
-
-1. Open claude.ai on your phone or computer
+1. Go to claude.ai on your phone or computer
 2. Upload `index.html` from this folder
-3. Describe what you want changed in plain English — e.g. *"Change the about section to say I've been doing this for 22 years, not 20"*
-4. Claude will give you back an edited file
+3. Tell Claude what you want changed in plain English
+   - e.g. *"Change the about section — I've been doing this for 22 years not 20"*
+   - e.g. *"The Bronte Stonework description is wrong, it should say..."*
+4. Claude gives you back an edited file
 5. Replace `index.html` in this folder with the new one
-6. Tell Tim — he'll push it live (takes 2 minutes)
+6. Tell Tim — he pushes it live
 
-**Or** — just tell Tim what you want changed and he'll do it.
+**Or just tell Tim what you want and he'll sort it.**
 
 ---
 
-## Site facts (for Claude's reference)
+## Technical context (for Claude)
 
-- **Live URL:** https://www.lands-caper.com
-- **GitHub repo:** https://github.com/tim-b-chapman/lands-caper (private)
-- **Hosting:** Azure Static Web Apps (free tier), auto-deploys on git push
-- **Gallery files:** Live in `Galleries/` folder — gitignored (too large for git). Hosting strategy TBD.
-- **Story videos:** Expected at `Galleries/[Project Name]/story.mp4` per project
-- **Colour palette:** Deep red `#c42b2b`, charcoal `#1e1e1e`, cream `#f5f0e8`
+- **GitHub:** https://github.com/tim-b-chapman/lands-caper (private — Tim owns)
+- **Hosting:** Azure Static Web Apps (free tier) — auto-deploys when Tim pushes to main
+- **Media files:** Hosted on Azure Blob Storage (`landscapermedia` storage account, `media` container)
+- **Media access:** SAS token auth (expires 2028-10-31) — Tim manages this
+- **File location:** `C:\Users\timbc\OneDrive\Documents\Claude\Projects\Lands Caper\index.html`
 - **Tech:** Single-file HTML/CSS/JS — no framework, no build tools
+- **Colour palette:** Red `#c42b2b`, charcoal `#1e1e1e`, cream `#f5f0e8`
 - **Tim's contact:** tim.b.chapman@gmail.com
+
+When Adam asks to change site text: edit `index.html` directly and return the file.
+When Adam asks to add photos/videos: instruct him to share with Tim via iCloud Shared Album.
+When Adam asks about the domain or hosting: tell him Tim handles that.
