@@ -18,62 +18,32 @@ Hi Claude. You're helping Adam ("Brownie") manage and grow his landscaping websi
 
 ## Adam's to-do list
 
-### 🔴 Priority — needed to make the site feel real
+### Step 1 — Review the site
+Open www.lands-caper.com and go through it with Claude.
 
-**1. Review the copy**
-Open www.lands-caper.com and read every section. Tell Claude what's wrong, off, or missing. Key things to check:
-- About section — does "I'm Brownie..." sound like you?
-- Services descriptions (Art / Hardscapes / Garden) — accurate?
-- Project names and one-liners — are they right?
+- Read every section — does it sound right? Does it sound like you?
+- Check: About, Services (Art / Hardscapes / Garden), each project name and description
+- Note anything wrong, missing, or that you'd change
+- Give feedback on the look and feel — colours, layout, anything that feels off
 
-**2. Create a Build Story video for each project**
-Each project has a portrait video slot (phone-shaped, left side). These need a short CapCut video.
+Claude will edit the text and return an updated file for Tim to push live.
 
-How to make one:
-1. Open CapCut on your phone
-2. New Project → pick your best photos + clips from that job
-3. Set canvas to 9:16 (portrait/story format)
-4. Keep it under 60 seconds, add music if you want
-5. Export at highest quality
-6. Share the MP4 with Tim — he'll upload it
+### Step 2 — Sort out photo and video hosting
+Tim will set this up with you. The goal:
 
-Projects that need a story video:
-- Annandale Staircase
-- Ashbury Picket Fence
-- Bronte Stonework
-- Dulwich Hill Megascreen
-- Dulwich Hill Picket Fence
-- Katoomba Restyle
-- Newtown Raised Brickwork
-- Newtown Tiling
-- Roseville Rock Wall
-- Seaforth Paving
+- Establish an iCloud Shared Album workflow — one album per job
+- Pick your best 4 finished photos per project (hero shots for the site)
+- Create a short CapCut video for each project (portrait format, under 60 secs)
+- Tim uploads everything to the site once it's ready
 
-✅ Taronga Zoo African Edible Garden — already done and live
+✅ Taronga Zoo is already live as the working example.
 
-**3. Add hero photos for each project**
-Each project shows 4 photos on the right side. Currently only Taronga Zoo has real photos — the rest show "Photo coming soon."
+### Step 3 — Establish the ongoing process with Tim
+Once Steps 1 and 2 are done, you and Tim agree on:
 
-For each job: pick your 4 best finished shots and share them with Tim in an iCloud Shared Album.
-
----
-
-### 🟡 Secondary — improve over time
-
-**4. Set up iCloud Shared Albums for new jobs**
-For every new job going forward:
-1. Create a Shared Album in iPhone Photos named after the job (e.g. `Marrickville Courtyard 2026`)
-2. Add photos as you go — progress shots, clips, finished hero shots
-3. Star your best 3–5 finished shots
-4. Share the album with Tim when the job wraps
-
-This is how new projects get added to the site.
-
-**5. Colour and design feedback**
-Have a look at the site on your phone. Does anything feel off visually? The palette is deep red + charcoal + cream. Tell Claude if you'd like anything different.
-
-**6. Review the project list**
-Currently showing 11 projects. Are these the right ones to showcase? Any you'd remove? Any better jobs not listed?
+- How you share new job photos (iCloud Shared Album)
+- How you request text changes (upload index.html to Claude, or just tell Tim)
+- How often to update the site with new work
 
 ---
 
