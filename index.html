@@ -1037,7 +1037,17 @@
 
 <!-- ── Projects JS ── -->
 <script>
+const MEDIA_BASE = "https://landscapermedia.blob.core.windows.net/media/";
+const MEDIA_SAS  = "?sv=2026-02-06&ss=b&srt=o&sp=rtfx&se=2028-10-31T07:26:50Z&st=2026-05-25T00:11:50Z&spr=https&sig=6otpNFWWsa3mjphMPaE%2FNDpUPM7YxhLtJCf5Z26%2BBYk%3D";
+
 const PROJECTS = [
+  {
+    name: "Taronga Zoo African Edible Garden",
+    category: "Garden",
+    desc: "Full garden build at Taronga Zoo — edible planting, soil prep, irrigation, and finished landscaping in one of Sydney's most iconic locations.",
+    get hero() { return ["IMG_5596.jpeg","IMG_5599.jpeg","IMG_5604.jpeg","IMG_5605.jpeg"].map(f => MEDIA_BASE+"Galleries/Taronga%20Zoo%20African%20Edible%20Garden/"+f+MEDIA_SAS); },
+    get story() { return MEDIA_BASE+"Galleries/Taronga%20Zoo%20African%20Edible%20Garden/Edits_Taronga_zoo_edible_garden_build_20260525_083801.MP4"+MEDIA_SAS; }
+  },
   {
     name: "Annandale Staircase",
     category: "Hardscapes",
@@ -1127,19 +1137,12 @@ const PROJECTS = [
     videos: ["Galleries/Seaforth%20Paving/IMG_7025.MOV","Galleries/Seaforth%20Paving/IMG_7042.MOV","Galleries/Seaforth%20Paving/IMG_7061.MOV"],
     hero: ["Galleries/Seaforth%20Paving/IMG_7078.JPEG","Galleries/Seaforth%20Paving/IMG_7081.JPEG","Galleries/Seaforth%20Paving/IMG_7082.JPEG"],
     story: null
-  },
-  {
-    name: "Taronga Zoo African Edible Garden",
-    category: "Garden",
-    desc: "Full garden build at Taronga Zoo — edible planting, soil prep, irrigation, and finished landscaping in one of Sydney's most iconic locations.",
-    hero: ["Galleries/Taronga%20Zoo%20African%20Edible%20Garden/IMG_5596.jpeg","Galleries/Taronga%20Zoo%20African%20Edible%20Garden/IMG_5599.jpeg","Galleries/Taronga%20Zoo%20African%20Edible%20Garden/IMG_5604.jpeg","Galleries/Taronga%20Zoo%20African%20Edible%20Garden/IMG_5605.jpeg"],
-    story: "Galleries/Taronga%20Zoo%20African%20Edible%20Garden/Edits_Taronga_zoo_edible_garden_build_20260525_083801.MP4"
   }
 ];
 
 // ── Render project blocks ──
 const list = document.getElementById('projects-list');
-PROJECTS.forEach((proj) => {
+PROJECTS.filter(p => p.story).forEach((proj) => {
   const block = document.createElement('div');
   block.className = 'project-block';
 
@@ -1171,68 +1174,4 @@ PROJECTS.forEach((proj) => {
 });
 </script>
 
-<!-- ── Re— typewriter JS ── -->
-<script>
-(function() {
-  const WORDS   = ['use', 'cycle', 'claim', 'purpose', 'imagine'];
-  const TYPE_MS  = 210;
-  const ERASE_MS = 90;
-  const HOLD_MS  = 3000;
-
-  const suf  = document.getElementById('reSuffix');
-  const wrap = document.getElementById('reSuffixWrap');
-
-  function lockWidth() {
-    let max = 0;
-    WORDS.forEach(w => { suf.textContent = w; max = Math.max(max, suf.offsetWidth); });
-    suf.textContent = '';
-    wrap.style.width = (max + 4) + 'px';
-  }
-
-  let si = 0, ci = 0, erasing = false;
-
-  function tick() {
-    const word = WORDS[si];
-    if (!erasing) {
-      ci++; suf.textContent = word.slice(0, ci);
-      if (ci === word.length) { setTimeout(() => { erasing = true; tick(); }, HOLD_MS); }
-      else { setTimeout(tick, TYPE_MS); }
-    } else {
-      ci--; suf.textContent = word.slice(0, ci);
-      if (ci === 0) { erasing = false; si = (si + 1) % WORDS.length; setTimeout(tick, TYPE_MS + 80); }
-      else { setTimeout(tick, ERASE_MS); }
-    }
-  }
-
-  window.addEventListener('load', () => { lockWidth(); setTimeout(tick, 2200); });
-})();
-</script>
-
-<!-- ── Splash + Menu JS ── -->
-<script>
-  // Splash dismiss
-  const splashEl = document.getElementById('splash');
-  function dismissSplash() { splashEl.classList.add('hidden'); }
-  splashEl.addEventListener('click', dismissSplash);
-  window.addEventListener('load', () => { setTimeout(dismissSplash, 4500); });
-
-  // Hamburger menu
-  const menuToggle = document.getElementById('menu-toggle');
-  const menuDrawer = document.getElementById('menu-drawer');
-
-  menuToggle.addEventListener('click', () => {
-    const isOpen = menuDrawer.classList.toggle('open');
-    menuToggle.classList.toggle('open', isOpen);
-  });
-
-  function closeMenu() {
-    menuDrawer.classList.remove('open');
-    menuToggle.classList.remove('open');
-  }
-
-  document.addEventListener('click', (e) => {
-    if (!menuDrawer.contains(e.target) && e.target !== menuToggle && !menuToggle.contains(e.target)) {
-      closeMenu();
-    }
-  });
-</script>
+<!-- ── Re— typewrite
